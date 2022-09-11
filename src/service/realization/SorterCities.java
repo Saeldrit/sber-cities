@@ -20,7 +20,7 @@ public class SorterCities implements Organization {
 
     @Override
     public List<City> sortingCitiesByDistrictAndName(List<City> cities) {
-        cities.sort(Comparator.comparing(City::getDistrict));
+        cities.sort(Comparator.comparing(City::getDistrict).thenComparing(City::getName));
 
         return new ArrayList<>(cities);
     }
