@@ -2,11 +2,9 @@ package service;
 
 import model.City;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class CityBuilder implements Builder<Integer, City> {
+public class CityBuilder extends AbstractBuilder<Integer, City> {
 
     @Override
     public City builderObjectCity(String line) {
@@ -23,11 +21,11 @@ public class CityBuilder implements Builder<Integer, City> {
     }
 
     @Override
-    public Map<Integer, City> builderMapCity(List<String> list) {
+    public Map<Integer, City> builderMapCity(List<String> content) {
         Map<Integer, City> map = new LinkedHashMap<>();
 
-        if (list.size() != 0) {
-            for (var line : list) {
+        if (!content.isEmpty()) {
+            for (var line : content) {
                 City city = new City();
 
                 String[] array = line.split(";");
@@ -41,6 +39,39 @@ public class CityBuilder implements Builder<Integer, City> {
         }
 
         return map;
+    }
+
+    @Override
+    public List<City> builderListCities(List<String> content) {
+        List<City> cities = new ArrayList<>();
+
+        if (!content.isEmpty()) {
+            for (var line : content) {
+                City city = new City();
+
+                String[] array = line.split(";");
+
+                for (int i = 0; i < array.length; i++) {
+                    builder(city, i, array);
+                }
+
+                cities.add(city);
+            }
+        }
+
+        return cities;
+    }
+
+
+    @Override
+    public void sortCitiesByName(List<City> cities) {
+        SortingCitiesByName sortingCitiesByName = new SortingCitiesByName();
+        cities.sort(sortingCitiesByName);
+    }
+
+    @Override
+    public void sortingCitiesByDistrict(List<City> cities) {
+        cities.sort(Comparator.comparing(City::getDistrict));
     }
 
     private void builder(City city, int i, String... array) {

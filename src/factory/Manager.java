@@ -3,6 +3,7 @@ package factory;
 import model.City;
 import repository.Reader;
 import repository.ReadingListOfCities;
+import service.AbstractBuilder;
 import service.Builder;
 import service.CityBuilder;
 
@@ -11,7 +12,7 @@ public class Manager {
         return new ReadingListOfCities();
     }
 
-    public static Builder<Integer, City> getCityBuilder() {
+    public static AbstractBuilder<Integer, City> getCityBuilder() {
         return new CityBuilder();
     }
 }
